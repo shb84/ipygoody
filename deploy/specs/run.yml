@@ -1,0 +1,5 @@
+dependencies:
+  # runtime
+  - jax  # [unix]
+  - pip:  # [win]
+    - "jax[cpu]"  # [win]

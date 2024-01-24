@@ -1,0 +1,16 @@
+channels:
+- conda-forge
+- defaults
+dependencies:
+  - python >=3.11,<3.12
+  # build
+  - doit[toml]
+  - conda-lock
+  - pip 
+  # protyping
+  - jupyterlab >=3.6,<4.0.0a0
+  # test
+  - pytest
+  # runtime  
+  - pip:  
+    - -e .
