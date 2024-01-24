@@ -8,9 +8,17 @@ dependencies:
   - conda-lock
   - pip 
   # protyping
+  - bqplot
+  - traitlets
+  - ipython 
+  - ipywidgets 
   - jupyterlab >=3.6,<4.0.0a0
+  - jupyterlab_widgets 
   # test
   - pytest
   # runtime  
+  - numpy
+  - pydoe2
+  - openmdao
   - pip:  
     - -e .

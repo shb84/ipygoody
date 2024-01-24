@@ -1,5 +1,5 @@
 dependencies:
   # runtime
-  - jax  # [unix]
-  - pip:  # [win]
-    - "jax[cpu]"  # [win]
+  - numpy
+  - pydoe2
+  - openmdao
