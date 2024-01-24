@@ -7,6 +7,8 @@ dependencies:
   - doit[toml]
   - conda-lock
   - pip 
+  # test
+  - pytest
   # protyping
   - bqplot
   - traitlets
@@ -14,8 +16,6 @@ dependencies:
   - ipywidgets 
   - jupyterlab >=3.6,<4.0.0a0
   - jupyterlab_widgets 
-  # test
-  - pytest
   # runtime  
   - numpy
   - pydoe2

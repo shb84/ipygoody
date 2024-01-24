@@ -1,9 +1,9 @@
 dependencies:
   # protyping
   - bqplot
-  - ipython >=7.20
-  - ipywidgets >=8.0.4,<9  
-  - jupyterlab  >=3.6,<4.0.0a0
-  - jupyterlab_widgets == 3.0.5  
-  - matplotlib-base
+  - traitlets
+  - ipython 
+  - ipywidgets 
+  - jupyterlab >=3.6,<4.0.0a0
+  - jupyterlab_widgets 
   

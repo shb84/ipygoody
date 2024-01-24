@@ -5,7 +5,7 @@ import ipywidgets as W
 import numpy as np
 
 DOT_COLOR = "#CD0000"
-LINE_COLOR = "#797a7a"  
+LINE_COLOR = "#797a7a"
 LINE_WIDTH = 3
 LINE_STYLE = [
     "solid",
@@ -160,10 +160,10 @@ def create_batches(n: int, m: int):
 
 
 def make_figure(
-    N: int, 
-    num_x_ticks: int = 3, 
-    num_y_ticks: int = 3, 
-    tick_style: dict = {'font-size': 10},
+    N: int,
+    num_x_ticks: int = 3,
+    num_y_ticks: int = 3,
+    tick_style: dict = {"font-size": 10},
     xmin: float = None,
     xmax: float = None,
     ymin: float = None,
@@ -187,12 +187,12 @@ def make_figure(
             line_style=LINE_STYLE[k],
         )
         dot = bq.marks.Scatter(
-            x=x0, 
-            y=y0, 
-            marker="circle", 
-            scales={"x": xs, "y": ys}, 
-            colors=[DOT_COLOR], 
-            tooltip=W.HTML(), 
+            x=x0,
+            y=y0,
+            marker="circle",
+            scales={"x": xs, "y": ys},
+            colors=[DOT_COLOR],
+            tooltip=W.HTML(),
         )
 
         def _on_hover(mark: bq.Mark, event: dict) -> None:
@@ -203,16 +203,16 @@ def make_figure(
         dot.on_hover(_on_hover)
         marks.extend([line, dot])
     xax = bq.Axis(
-        scale=xs, 
-        grid_lines="solid", 
-        num_ticks=num_x_ticks, 
+        scale=xs,
+        grid_lines="solid",
+        num_ticks=num_x_ticks,
         tick_style=tick_style,
     )
     yax = bq.Axis(
-        scale=ys, 
-        grid_lines="solid", 
-        orientation="vertical", 
-        num_ticks=num_y_ticks, 
+        scale=ys,
+        grid_lines="solid",
+        orientation="vertical",
+        num_ticks=num_y_ticks,
         tick_style=tick_style,
     )
     layout = W.Layout(

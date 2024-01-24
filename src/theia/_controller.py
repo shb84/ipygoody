@@ -103,6 +103,6 @@ class Controller(W.VBox):
 
         self.children = [
             *self.sliders,
-            *self.range_sliders["x"], 
-            *self.range_sliders["y"], 
+            *self.range_sliders["x"],
+            *self.range_sliders["y"],
         ]

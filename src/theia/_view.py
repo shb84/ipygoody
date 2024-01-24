@@ -14,10 +14,9 @@ import traittypes as TT
 from ._data import Data
 from ._utils import create_batches, create_grid, make_grid
 
-
 DEFAULT_RESOLUTION = 25
 DEFAULT_WIDTH = 300
-DEFAULT_HEIGHT = DEFAULT_WIDTH 
+DEFAULT_HEIGHT = DEFAULT_WIDTH
 
 
 class View(W.Box):
@@ -191,30 +190,30 @@ class View(W.Box):
 
     @T.validate("width")
     def _validate_width(self, proposal):
-        width = proposal.value 
-        if width is None: 
+        width = proposal.value
+        if width is None:
             return DEFAULT_WIDTH * self.data.n_y
         return width
 
     @T.validate("height")
     def _validate_height(self, proposal):
-        height = proposal.value 
-        if height is None: 
+        height = proposal.value
+        if height is None:
             return DEFAULT_HEIGHT * self.data.n_y
         return height
 
     @T.validate("xlabels")
     def _validate_xlabels(self, proposal):
-        xlabels = proposal.value 
-        if not xlabels: 
+        xlabels = proposal.value
+        if not xlabels:
             return self._create_xlabels()
         assert len(xlabels) == self.data.n_x
         return xlabels
 
     @T.validate("ylabels")
     def _validate_ylabels(self, proposal):
-        ylabels = proposal.value 
-        if not ylabels: 
+        ylabels = proposal.value
+        if not ylabels:
             return self._create_ylabels()
         assert len(ylabels) == self.data.n_y
         return ylabels
@@ -228,7 +227,7 @@ class View(W.Box):
     @T.validate("x0")
     def _validate_x0(self, proposal):
         array = proposal.value
-        if array is None: 
+        if array is None:
             return self._create_x0()
         array = array.reshape((1, -1))
         assert array.ndim == self.data.x.ndim
