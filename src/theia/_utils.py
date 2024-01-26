@@ -198,7 +198,7 @@ def make_figure(
         def _on_hover(mark: bq.Mark, event: dict) -> None:
             x = event["data"]["x"]
             y = event["data"]["y"]
-            mark.tooltip.value = f"({x:.2f}, {y:.2f})"
+            mark.tooltip.value = f"({x:.4f}, {y:.4f})"
 
         dot.on_hover(_on_hover)
         marks.extend([line, dot])

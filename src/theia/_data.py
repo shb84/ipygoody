@@ -47,7 +47,7 @@ class Data(T.HasTraits):
     def _validate_x(self, proposal):
         x = proposal.value
         if x.ndim != 2 or x.shape[1] != self.n_x or x.dtype != np.float64:
-            return x.astype(float).reshape(-1, self.n_x)
+            return x.astype(np.float64).reshape(-1, self.n_x)
         assert x.ndim == 2  # require shape (m, n_x)
         assert x.shape[1] == self.n_x
         assert x.dtype == np.float64
