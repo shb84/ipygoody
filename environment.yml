@@ -20,5 +20,3 @@ dependencies:
   - numpy
   - pydoe2
   - openmdao
-  - pip:  
-    - -e .

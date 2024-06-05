@@ -1,6 +1,6 @@
-# Theia
+# ipyprofiler
 
-A Library of Jupyter widgets to visualize models and assess predictive qualities.
+A Jupyter widget to visualize sensitivity profiles of functions. 
 
 
 --- 
@@ -10,8 +10,9 @@ A Library of Jupyter widgets to visualize models and assess predictive qualities
 Assuming [conda](https://conda.org/) is installed:
 
 ```bash
-conda env update --file environment.yml --name theia
-conda activate theia
+conda env update --file environment.yml --name ipyprofiler
+conda activate ipyprofiler
+pip install -e . 
 pytest
 ```
 

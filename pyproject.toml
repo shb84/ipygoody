@@ -3,12 +3,12 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "theia"
+name = "ipyprofiler"
 version = "0.0.1"
 authors = [
   { name="Steven H. Berguin", email="stevenberguin@gmail.com" },
 ]
-description = "A Library of Jupyter widgets to visualize models and assess predictive qualities"
+description = "A Jupyter widget to visualize sensitivity profiles of functions."
 readme = "README.md"
 requires-python = ">=3.11"
 classifiers = [
@@ -27,13 +27,13 @@ dependencies = [
 
 
 [project.urls]
-Homepage = "https://github.com/shb84/theia.git"
-Issues = "https://github.com/shb84/theia/issues"
+Homepage = "https://github.com/shb84/ipyprofiler.git"
+Issues = "https://github.com/shb84/ipyprofiler/issues"
 
 
 [tool.setuptools.packages.find]
 where = ["src"]  # list of folders that contain the packages (["."] by default)
-include = ["theia*"]  # package names should match these glob patterns (["*"] by default)
-exclude = ["theia.tests*"]  # exclude packages matching these glob patterns (empty by default)
+include = ["ipyprofiler*"]  # package names should match these glob patterns (["*"] by default)
+exclude = ["ipyprofiler.tests*"]  # exclude packages matching these glob patterns (empty by default)
 namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 

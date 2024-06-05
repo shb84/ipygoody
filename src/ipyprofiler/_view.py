@@ -46,8 +46,8 @@ class View(W.Box):
     x0 = TT.Array(allow_none=False)
     y0 = TT.Array(allow_none=False)
 
-    xlabels = T.List(allow_none=True)
-    ylabels = T.List(allow_none=True)
+    xlabels = T.List(allow_none=False)
+    ylabels = T.List(allow_none=False)
 
     data = T.Instance(klass=Data)
     grid = T.Instance(klass=W.GridspecLayout)
