@@ -5,6 +5,8 @@ Module contains widgets, such as slider bars, to control model and view.
 from functools import partial
 
 import ipywidgets as W
+import bqplot as bq
+import numpy as np 
 
 from ._view import View
 
@@ -93,13 +95,26 @@ class Controller(W.VBox):
         for i, range_slider in enumerate(self.range_sliders["y"]):
             range_slider.observe(partial(_update_ylim, view, i), "value")
 
-        for j, range_slider in enumerate(self.range_sliders["x"]):
-            range_slider.observe(partial(_update_xlim, view, j), "value")
+        # for j, range_slider in enumerate(self.range_sliders["x"]):
+        #     range_slider.observe(partial(_update_xlim, view, j), "value")
 
         self.sliders = _create_sliders(view)
 
-        for i, slider in enumerate(self.sliders):
-            slider.observe(partial(_update_x0, view, i), "value")
+        for j, slider in enumerate(self.sliders):
+            slider.observe(partial(_update_x0, view, j), "value")
+            for i in range(view.data.n_y):
+                marks = view.grid[i, j].marks
+                for mark in marks:  
+                    if isinstance(mark, bq.marks.Scatter):
+                        dot = mark
+                        W.link(
+                            (dot, "x"), 
+                            (slider, "value"), 
+                            transform=(
+                                lambda x: x.squeeze(), 
+                                lambda value: np.array([value]),
+                            )
+                        )
 
         self.children = [
             *self.sliders,

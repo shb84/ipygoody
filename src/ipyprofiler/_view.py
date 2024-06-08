@@ -115,9 +115,9 @@ class View(W.Box):
                             line.x = self.data.x[batch, j]
                             line.y = self.data.y[batch, i, k]
                         if isinstance(mark, bq.marks.Scatter):
-                            cursor = mark
-                            cursor.x = self.x0[0, j : j + 1]
-                            cursor.y = self.y0[0, i : i + 1, k]
+                            dot = mark
+                            dot.x = self.x0[0, j : j + 1]
+                            dot.y = self.y0[0, i : i + 1, k]
                             k += 1
 
     def _update_lims(self, *args, **kwargs):
@@ -175,7 +175,7 @@ class View(W.Box):
     @T.default("grid")
     def _create_view(self):
         grid = make_grid(
-            self.data.n_x, self.data.n_y, self.data.N, self.width, self.height
+            self.data.n_x, self.data.n_y, self.data.N, self.width, self.height,
         )
         return grid
 

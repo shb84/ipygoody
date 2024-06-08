@@ -193,6 +193,8 @@ def make_figure(
             scales={"x": xs, "y": ys},
             colors=[DOT_COLOR],
             tooltip=W.HTML(),
+            enable_move=True,
+            # restrict_x=True,
         )
 
         def _on_hover(mark: bq.Mark, event: dict) -> None:
