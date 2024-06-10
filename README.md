@@ -10,8 +10,8 @@ A library of Jupyter widgets to visualize meta-models and the data used to train
 Assuming [conda](https://conda.org/) is installed:
 
 ```bash
-conda env update --file environment.yml --name ipyprofiler
-conda activate ipyprofiler
+conda env update --file environment.yml --prefix ./venv
+conda activate ./venv
 pip install -e . 
 pytest
 ```
