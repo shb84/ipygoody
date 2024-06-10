@@ -222,7 +222,7 @@ def make_figure(
         flex_flow="column",
         border="solid 2px",
         align_items="stretch",
-        width="100%",
+        width='auto', height='auto',
     )
     fig = bq.Figure(marks=marks, axes=[xax, yax], layout=layout, fig_margin=FIG_MARGIN)
     return fig
@@ -236,7 +236,7 @@ def make_grid(n_x: int, n_y: int, N: int, width: int = None, height: int = None)
     if height:
         fig_height = f"{height / n_y - BETWEEN_SPACE}px"
         height = f"{height}px"
-    grid = W.GridspecLayout(n_y, n_x, width=width, height=height)
+    grid = W.GridspecLayout(n_y, n_x)
     for j in range(n_x):
         for i in range(n_y):
             grid[i, j] = make_figure(N)

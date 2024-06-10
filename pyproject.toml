@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "ipyprofiler"
+name = "ipymetatools"
 version = "0.0.1"
 authors = [
   { name="Steven H. Berguin", email="stevenberguin@gmail.com" },
@@ -27,13 +27,13 @@ dependencies = [
 
 
 [project.urls]
-Homepage = "https://github.com/shb84/ipyprofiler.git"
-Issues = "https://github.com/shb84/ipyprofiler/issues"
+Homepage = "https://github.com/shb84/ipymetatools.git"
+Issues = "https://github.com/shb84/ipymetatools/issues"
 
 
 [tool.setuptools.packages.find]
 where = ["src"]  # list of folders that contain the packages (["."] by default)
-include = ["ipyprofiler*"]  # package names should match these glob patterns (["*"] by default)
-exclude = ["ipyprofiler.tests*"]  # exclude packages matching these glob patterns (empty by default)
+include = ["ipymetatools*"]  # package names should match these glob patterns (["*"] by default)
+exclude = ["ipymetatools.tests*"]  # exclude packages matching these glob patterns (empty by default)
 namespaces = false  # to disable scanning PEP 420 namespaces (true by default)
 
