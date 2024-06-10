@@ -1,6 +1,6 @@
-# ipyprofiler
+# ipymetatools
 
-A Jupyter widget to visualize sensitivity profiles of functions. 
+A library of Jupyter widgets to visualize meta-models and the data used to train them. 
 
 
 --- 
