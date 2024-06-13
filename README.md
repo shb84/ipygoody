@@ -1,7 +1,7 @@
-# ipymetatools
+# ipymodelview
 
-A library of Jupyter widgets to visualize meta-models and the data used to train them. 
-
+A library of Jupyter widgets to visualize any vectorized model with a signature `y = f(x)` where `x, y` are arrays. For example, 
+`f(x)` could be a surrogate model (e.g. response surface equation or neural network) or it could be a physics-based model (e.g. an `openmdao` model). 
 
 --- 
 ## Installation
