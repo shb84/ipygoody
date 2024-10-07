@@ -20,7 +20,7 @@ dependencies = [
   "bqplot>=0.12",
   "traitlets>=5.14",
   "ipywidgets>=8.1",
-  "jupyterlab >=3.6,<4.0.0a0",
+  "jupyterlab >=3.6",
   "jupyterlab_widgets>3.0",
   "ipython>=8.20",
 ]
