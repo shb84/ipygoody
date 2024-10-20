@@ -1,7 +1,6 @@
-# ipymodelview
+# ipysensitivityprofiler
 
-A library of Jupyter widgets to visualize any vectorized model with a signature `y = f(x)` where `x, y` are arrays. For example, 
-`f(x)` could be a surrogate model (e.g. response surface equation or neural network) or it could be a physics-based model (e.g. an `openmdao` model). 
+Jupyter Widgets for visualizing local sensitivities of one or more vectorized functions with signature `y = f(x)` where `x, y` are input, output arrays.  
 
 --- 
 ## Installation
