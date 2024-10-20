@@ -2,16 +2,19 @@
 
 Module contains widgets, such as slider bars, to control model and view.
 """
-from functools import partial
 
-import ipywidgets as W
+from functools import partial
+from typing import Any, Dict, List
+
 import bqplot as bq
-import numpy as np 
+import ipywidgets as W
+import numpy as np
+import traitlets as T
 
 from ._view import View
 
 
-def _update_ylim(view: View, index: int, proposal: dict):
+def _update_ylim(view: View, index: int, proposal: T.Bunch) -> None:
     if proposal.new != proposal.old:
         ymin = view.ymin.tolist()
         ymax = view.ymax.tolist()
@@ -22,7 +25,7 @@ def _update_ylim(view: View, index: int, proposal: dict):
             view.ymin = ymin
 
 
-def _update_xlim(view: View, index, proposal: dict):
+def _update_xlim(view: View, index: int, proposal: T.Bunch) -> None:
     if proposal.new != proposal.old:
         xmin = view.xmin.tolist()
         xmax = view.xmax.tolist()
@@ -33,14 +36,14 @@ def _update_xlim(view: View, index, proposal: dict):
             view.xmin = xmin
 
 
-def _update_x0(view: View, index: int, proposal: dict):
+def _update_x0(view: View, index: int, proposal: T.Bunch) -> None:
     if proposal.new != proposal.old:
         x0 = view.x0.tolist()
         x0[0][index] = proposal.new
         view.x0 = x0
 
 
-def _create_sliders(view: View):
+def _create_sliders(view: View) -> List[W.FloatSlider]:
     sliders = []
     for i in range(view.data.n_x):
         slider = W.FloatSlider(
@@ -54,8 +57,8 @@ def _create_sliders(view: View):
     return sliders
 
 
-def _create_range_sliders(view: View):
-    sliders = {"x": [], "y": []}
+def _create_range_sliders(view: View) -> Dict[str, W.FloatRangeSlider]:
+    sliders: Dict[str, List[W.FloatRangeSlider]] = {"x": [], "y": []}
 
     for i in range(view.data.n_y):
         slider = W.FloatRangeSlider(
@@ -63,9 +66,10 @@ def _create_range_sliders(view: View):
             min=view.ymin[i],
             max=view.ymax[i],
             description=view.ylabels[i],
-            step=(view.ymax[i] - view.ymin[i]) / 10_000,
+            step=(view.ymax[i] - view.ymin[i]) / view.resolution,
             orientation="horizontal",
-            readout=False,
+            readout=True,
+            # readout_format='.2f',
         )
         sliders["y"].append(slider)
 
@@ -75,9 +79,10 @@ def _create_range_sliders(view: View):
             min=view.xmin[i],
             max=view.xmax[i],
             description=view.xlabels[i],
-            step=(view.xmax[i] - view.xmin[i]) / 10_000,
+            step=(view.xmax[i] - view.xmin[i]) / view.resolution,
             orientation="horizontal",
-            readout=False,
+            readout=True,
+            # readout_format='.2f',
         )
         sliders["x"].append(slider)
 
@@ -87,7 +92,7 @@ def _create_range_sliders(view: View):
 class Controller(W.VBox):
     """Control panel for profiler."""
 
-    def __init__(self, view: View, **kwargs):
+    def __init__(self, view: View, **kwargs: Any):
         super().__init__(**kwargs)
 
         self.range_sliders = _create_range_sliders(view)
@@ -95,8 +100,8 @@ class Controller(W.VBox):
         for i, range_slider in enumerate(self.range_sliders["y"]):
             range_slider.observe(partial(_update_ylim, view, i), "value")
 
-        # for j, range_slider in enumerate(self.range_sliders["x"]):
-        #     range_slider.observe(partial(_update_xlim, view, j), "value")
+        for j, range_slider in enumerate(self.range_sliders["x"]):
+            range_slider.observe(partial(_update_xlim, view, j), "value")
 
         self.sliders = _create_sliders(view)
 
@@ -104,16 +109,16 @@ class Controller(W.VBox):
             slider.observe(partial(_update_x0, view, j), "value")
             for i in range(view.data.n_y):
                 marks = view.grid[i, j].marks
-                for mark in marks:  
+                for mark in marks:
                     if isinstance(mark, bq.marks.Scatter):
                         dot = mark
                         W.link(
-                            (dot, "x"), 
-                            (slider, "value"), 
+                            (dot, "x"),
+                            (slider, "value"),
                             transform=(
-                                lambda x: x.squeeze(), 
+                                lambda x: x.squeeze(),
                                 lambda value: np.array([value]),
-                            )
+                            ),
                         )
 
         self.children = [

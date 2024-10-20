@@ -1,5 +1,7 @@
 """Support functions used by modules."""
 
+from typing import List, Optional
+
 import bqplot as bq
 import ipywidgets as W
 import numpy as np
@@ -17,7 +19,9 @@ FIG_MARGIN = dict(top=45, bottom=45, left=45, right=45)
 BETWEEN_SPACE = 5
 
 
-def create_grid(x0, xmin, xmax, resolution=10):
+def create_grid(
+    x0: np.ndarray, xmin: np.ndarray, xmax: np.ndarray, resolution: int = 10
+) -> np.ndarray:
     """Generate grid data for sensitivity profilers.
 
     Parameters
@@ -111,7 +115,7 @@ def create_grid(x0, xmin, xmax, resolution=10):
     return x
 
 
-def create_batches(n: int, m: int):
+def create_batches(n: int, m: int) -> List[List[int]]:
     """Create n batches containing m examples each.
 
     Given an array x of shape (n * m, -1), this method
@@ -164,12 +168,12 @@ def make_figure(
     num_x_ticks: int = 3,
     num_y_ticks: int = 3,
     tick_style: dict = {"font-size": 10},
-    xmin: float = None,
-    xmax: float = None,
-    ymin: float = None,
-    ymax: float = None,
-):
-    """Create initial figure for profiler trait (data will be replaced)"""
+    xmin: Optional[float] = None,
+    xmax: Optional[float] = None,
+    ymin: Optional[float] = None,
+    ymax: Optional[float] = None,
+) -> bq.Figure:
+    """Create initial figure for profiler trait (data will be replaced)."""
     x = np.array([0, 1])
     y = np.array([0, 1])
     x0 = np.array([0.5])
@@ -222,20 +226,25 @@ def make_figure(
         flex_flow="column",
         border="solid 2px",
         align_items="stretch",
-        width='auto', height='auto',
+        width="auto",
+        height="auto",
     )
     fig = bq.Figure(marks=marks, axes=[xax, yax], layout=layout, fig_margin=FIG_MARGIN)
     return fig
 
 
-def make_grid(n_x: int, n_y: int, N: int, width: int = None, height: int = None):
+def make_grid(
+    n_x: int,
+    n_y: int,
+    N: int,
+    width: Optional[int] = None,
+    height: Optional[int] = None,
+) -> W.GridspecLayout:
     """Create grid layout of specified width and height."""
     if width:
         fig_width = f"{width / n_x - BETWEEN_SPACE}px"
-        width = f"{width}px"
     if height:
         fig_height = f"{height / n_y - BETWEEN_SPACE}px"
-        height = f"{height}px"
     grid = W.GridspecLayout(n_y, n_x)
     for j in range(n_x):
         for i in range(n_y):

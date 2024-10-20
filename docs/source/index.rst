@@ -1,10 +1,10 @@
-.. theia documentation master file, created by
+.. ipysensitivityprofiler documentation master file, created by
    sphinx-quickstart on Sun Jan 23 10:35:00 2024.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to theia's documentation!
-=================================
+Welcome to ipysensitivityprofiler's documentation!
+==================================================
 
 .. toctree::
    :maxdepth: 2
@@ -20,5 +20,5 @@ Indices and tables
 API
 ---
 
-.. automodule:: theia
+.. automodule:: ipysensitivityprofiler
    :members:
