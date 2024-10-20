@@ -1,6 +1,6 @@
 # ipysensitivityprofiler
 
-Jupyter Widgets for visualizing local sensitivities of one or more vectorized functions with signature `y = f(x)` where `x, y` are input, output arrays.  
+Jupyter Widgets for visualizing local sensitivities of one or more vectorized functions with signature `y = f(x)`  where `x,y` are arrays.
 
 --- 
 ## Installation
