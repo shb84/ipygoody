@@ -20,13 +20,11 @@ dependencies = [
   "bqplot",
   "ipywidgets",
   "jupyterlab",
-  "nptyping",
-  "openmdao"
 ]
 
 [project.optional-dependencies]
-demo = [
-  "jenn",  
+openmdao = [
+  "openmdao"
 ]
 lint = [
     "black",
@@ -137,15 +135,14 @@ lint = { features = ["lint"], solve-group = "default" }
 test = { features = ["test"], solve-group = "default" }
 build = { features = ["build"], solve-group = "default" }
 release = { features = ["release"], solve-group = "default" }
-demo = { features = ["demo"], solve-group = "default" }
+lab = { features = ["openmdao"], solve-group = "default" }
 
 [tool.pixi.dependencies]
 bqplot = "*"
 ipywidgets = "*"
 jupyterlab = "*"
 
-[tool.pixi.feature.demo.dependencies]
-jenn = "*"
+[tool.pixi.feature.mdao.dependencies]
 openmdao = "*"
 
 [tool.pixi.feature.lint.dependencies]
@@ -162,8 +159,8 @@ pytest = "*"
 pytest-cov = "*"
 pytest-html = "*"
 
-[tool.pixi.feature.demo.tasks]
-demo = "jupyter lab --no-browser"
+[tool.pixi.feature.openmdao.tasks]
+lab = "jupyter lab --no-browser"
 
 [tool.pixi.feature.lint.tasks]
 black = { cmd = "black --quiet src/", inputs = ["src/**/*.py"] }

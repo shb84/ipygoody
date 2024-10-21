@@ -4,7 +4,8 @@
 # Distributed under the terms of the MIT License.
 
 from ._controller import Controller
-from ._model import openmdao_profiler, profiler
+from ._model import profiler
+from ._openmdao_model import openmdao_profiler
 from ._view import View
 
 __version__ = "0.0.1"
