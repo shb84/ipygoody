@@ -35,15 +35,14 @@ If needed, update any project dependencies in the `pyproject.toml` (they will au
 ```
 [project]
 dependencies = [
-  "jsonpointer>=2.4",
-  "jsonschema>=4.22",
-  "orjson>=3.9",
-  "numpy>=1.22",
+  "bqplot",
+  "ipywidgets",
+  "jupyterlab",
 ]
 
 [project.optional-dependencies]
 plot = [
-  "matplotlib",
+  "openmdao",
 ]
 ```
 
