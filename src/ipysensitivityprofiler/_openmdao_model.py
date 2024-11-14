@@ -14,12 +14,12 @@ from ._view import DEFAULT_RESOLUTION, DEFAULT_WIDTH
 
 _has_openmdao = True if find_spec("openmdao") else False
 
+
+OpenMDAOProblemType: TypeAlias = "Problem"
+
 if _has_openmdao:
     from openmdao.api import Problem
     from openmdao.utils.units import convert_units
-    OpenMDAOProblem: TypeAlias = Problem
-else: 
-    OpenMDAOProblem: TypeAlias = "Problem"
 
 
 def requires_openmdao(func: Callable) -> Callable:
@@ -36,7 +36,7 @@ def requires_openmdao(func: Callable) -> Callable:
 
 @requires_openmdao
 def openmdao_profiler(
-    problem: OpenMDAOProblem,
+    problem: Problem | OpenMDAOProblemType,
     inputs: List[Tuple[str, float, float, Optional[str]]],
     outputs: List[Tuple[str, float, float, Optional[str]]],
     defaults: Optional[List[Tuple[str, float, Optional[str]]]] = None,
