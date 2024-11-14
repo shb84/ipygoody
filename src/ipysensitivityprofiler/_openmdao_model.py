@@ -5,7 +5,7 @@ Module in charge of interfacing with an openmdao model.
 
 from functools import wraps
 from importlib.util import find_spec
-from typing import Any, Callable, List, Optional, Tuple
+from typing import Any, Callable, List, Optional, Tuple, TypeAlias
 
 import numpy as np
 
@@ -17,6 +17,9 @@ _has_openmdao = True if find_spec("openmdao") else False
 if _has_openmdao:
     from openmdao.api import Problem
     from openmdao.utils.units import convert_units
+    OpenMDAOProblem: TypeAlias = Problem
+else: 
+    OpenMDAOProblem: TypeAlias = "Problem"
 
 
 def requires_openmdao(func: Callable) -> Callable:
@@ -33,7 +36,7 @@ def requires_openmdao(func: Callable) -> Callable:
 
 @requires_openmdao
 def openmdao_profiler(
-    problem: Problem,
+    problem: OpenMDAOProblem,
     inputs: List[Tuple[str, float, float, Optional[str]]],
     outputs: List[Tuple[str, float, float, Optional[str]]],
     defaults: Optional[List[Tuple[str, float, Optional[str]]]] = None,
