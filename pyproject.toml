@@ -17,15 +17,15 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
+  "numpy", 
   "bqplot",
-  "ipywidgets",
+  "jupyter",
   "jupyterlab",
+  "traitlets",
+  "widgetsnbextension"
 ]
 
 [project.optional-dependencies]
-openmdao = [
-  "openmdao"
-]
 lint = [
     "black",
     "docformatter",
@@ -139,8 +139,11 @@ lab = { features = ["openmdao"], solve-group = "default" }
 
 [tool.pixi.dependencies]
 bqplot = "*"
-ipywidgets = "*"
+jupyter = "*"
 jupyterlab = "*"
+traitlets = "*"
+widgetsnbextension = "*"
+numpy = "*"
 
 [tool.pixi.feature.mdao.dependencies]
 openmdao = "*"
@@ -188,8 +191,8 @@ test-nb = { cmd = "pytest --nbmake --nbmake-timeout=3000 docs/examples/*.ipynb",
 test = { depends-on = ["test-py", "test-nb"] }
 
 [tool.pixi.feature.build.tasks]
-build-dist = { cmd = "python -m build --outdir build/dist", inputs = ["src/**/*.py"] }
-build-docs = { cmd = "sphinx-build -b html docs/source build/docs/html", inputs = ["src/**/*.py", "docs/**/*.py"] }
+build-dist = { cmd = "python -m build --outdir build/dist", inputs = ["src/**/*.py"], outputs = ["build/dist/*.whl", "build/dist/*.tar.gz"] }
+build-docs = { cmd = "sphinx-build -b html docs/source build/docs/html", inputs = ["src/**/*.py", "docs/**/*.py"], outputs = ["build/docs/**/*.html"]}
 build = { depends-on = ["build-docs", "build-dist"] }
 
 [tool.pixi.feature.release.tasks]

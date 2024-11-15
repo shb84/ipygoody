@@ -1,4 +1,4 @@
-"""Model.
+"""Model Interface.
 
 Module in charge of interfacing with data generating models. For
 example, such a model could be a simple callable y = f(x) which takes in
