@@ -149,13 +149,3 @@ Tag commit for release and push to trigger release pipeline:
 git tag v0.0.1
 git push origin v0.0.1
 ```
-
-Once the pipeline has succeeded, check that there is now a new release on `pypi.org`, `GitHub Pages` and `Github Release`. If so, the last step is to lock the branch associated with the release, so it can be easily accessed but not changed. 
-
-```bash
-git checkout -b ipysensitivityprofiler-v0.0.1 
-git push --set-upstream origin ipysensitivityprofiler-v0.0.1 
-```
-
-On GitHub, go to Project `Settings > Branches` and add a "Lock branch" rule for `ipysensitivityprofiler-v0.0.1`.
-

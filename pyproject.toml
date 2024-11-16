@@ -44,6 +44,7 @@ build = [
     "build",
     "sphinx",  # to build docs 
     "sphinx_rtd_theme",
+    "sphinx-toolbox",
     "pip", 
 ]
 release = [
@@ -144,9 +145,7 @@ jupyterlab = "*"
 traitlets = "*"
 widgetsnbextension = "*"
 numpy = "*"
-
-[tool.pixi.feature.mdao.dependencies]
-openmdao = "*"
+openmdao = "*"  # experimenting with openmdao model visualization
 
 [tool.pixi.feature.lint.dependencies]
 black = "*"
@@ -164,6 +163,7 @@ pytest-html = "*"
 
 [tool.pixi.feature.openmdao.tasks]
 lab = "jupyter lab --no-browser"
+env = { cmd = "conda env export -p .pixi/envs/default > environment.yml", inputs = ["pixi.lock", "src/**/*.py"], outputs = ["environment.yml"]}
 
 [tool.pixi.feature.lint.tasks]
 black = { cmd = "black --quiet src/", inputs = ["src/**/*.py"] }
@@ -192,7 +192,7 @@ test = { depends-on = ["test-py", "test-nb"] }
 
 [tool.pixi.feature.build.tasks]
 build-dist = { cmd = "python -m build --outdir build/dist", inputs = ["src/**/*.py"], outputs = ["build/dist/*.whl", "build/dist/*.tar.gz"] }
-build-docs = { cmd = "sphinx-build -b html docs/source build/docs/html", inputs = ["src/**/*.py", "docs/**/*.py"], outputs = ["build/docs/**/*.html"]}
+build-docs = { cmd = "sphinx-build -b html docs/source build/docs/html", inputs = ["src/**/*.py", "docs/**/*.py", "docs/**/*.rst", "docs/**/*.png"], outputs = ["build/docs/**/*.html"]}
 build = { depends-on = ["build-docs", "build-dist"] }
 
 [tool.pixi.feature.release.tasks]
