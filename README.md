@@ -12,7 +12,7 @@ pip install ipysensitivityprofiler
 --- 
 ## Example 
 
-Example notebooks are avilable for download on [GitHub]() and hosted [binder.org](). 
+Example notebooks are avilable for download on [GitHub]() and hosted on [binder.org](). 
 
 --- 
 ## Documentation 
@@ -27,11 +27,11 @@ import numpy as np
 import ipysensitivityprofiler as isp
 
 def quadratic1(x):
-    """y = x[0]**2 + x[2]**2 + x[0]*x[1]"""
+    """y = x1**2 + x2**2 + x1*x2"""
     return (np.prod(x, axis=1) + np.power(x, 2).sum(axis=1))
 
 def quadratic2(x):
-    """y = 10 + x[0]**2 + x[2]**2 + x[0]*x[1]"""
+    """y = 10 + x1**2 + x2**2 - 2 * x1*x2"""
     return (10 - 2 * np.prod(x, axis=1) + np.power(x, 2).sum(axis=1))
 
 isp.profiler(
@@ -47,7 +47,14 @@ isp.profiler(
 )
 ```
 
-![](docs/pics/example_usage.gif)
+![](docs/pics/basic_usage.gif)
+
+---
+# Main Features
+
+* Visualize multiple outputs against multiple inputs interactively 
+* Overlay more than one model at once
+* Download pictures on individual plots (by clicking on red dot)
 
 --- 
 ## License

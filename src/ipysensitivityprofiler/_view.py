@@ -1,11 +1,5 @@
-"""View.
-
-Module contains widgets and data to render interactive sensivity
-profiles.
-"""
-
 import pathlib as pl
-from typing import Any, Callable, List
+from typing import Any, Callable, List, Optional
 
 import bqplot as bq
 import ipywidgets as W
@@ -22,7 +16,7 @@ DEFAULT_HEIGHT = DEFAULT_WIDTH
 
 
 class View(W.Box):
-    """Widget that displays grid of sensivity profiles."""
+    """Widget to display grid of sensivity profiles."""
 
     # _view_module = T.Unicode('sensivity_profiler').tag(sync=True)
     # _view_module_version = T.Unicode('0.0.0').tag(sync=True)
@@ -32,27 +26,56 @@ class View(W.Box):
     # Traits #
     ##########
 
-    predict: Callable = T.Callable(allow_none=False)  # type: ignore [assignment]
+    predict: Callable = T.Callable(
+        allow_none=False,
+        help="Callable function with signature y = f(x) where x must be a numpy array of shape (-1, n_x) and y an array of shape (-1, n_y)."
+        "",
+    )  # type: ignore [assignment]
 
-    xmin: np.ndarray = TT.Array(allow_none=False)
-    xmax: np.ndarray = TT.Array(allow_none=False)
+    xmin: np.ndarray = TT.Array(
+        allow_none=False,
+        help="An array of shape (n_x,) representing the lower bound on the inputs",
+    )
+    xmax: np.ndarray = TT.Array(
+        allow_none=False,
+        help="An array of shape (n_x,) representing the upper bound on the inputs",
+    )
 
-    ymin: np.ndarray = TT.Array(allow_none=False)
-    ymax: np.ndarray = TT.Array(allow_none=False)
+    ymin: np.ndarray = TT.Array(
+        allow_none=False,
+        help="An array of shape (n_y,) representing the lower bound on the outputs",
+    )
+    ymax: np.ndarray = TT.Array(
+        allow_none=False,
+        help="An array of shape (n_y,) representing the upper bound on the outputs",
+    )
 
-    width: int = T.Int(allow_none=True)  # type: ignore [assignment]
-    height: int = T.Int(allow_none=True)  # type: ignore [assignment]
+    width: int = T.Int(
+        allow_none=True, help="The width of each figure in pixels. Default is 300."
+    )  # type: ignore [assignment]
+    height: int = T.Int(
+        allow_none=True, help="The height of each figure in pixels. Default is 300."
+    )  # type: ignore [assignment]
 
-    resolution: int = T.Int(default_value=DEFAULT_RESOLUTION)  # type: ignore [assignment]
+    resolution: int = T.Int(
+        default_value=DEFAULT_RESOLUTION,
+        help="The number of point in each curve. Default is 25.",
+    )  # type: ignore [assignment]
 
-    x0: np.ndarray = TT.Array(allow_none=False)
-    y0: np.ndarray = TT.Array(allow_none=False)
+    x0: np.ndarray = TT.Array(
+        allow_none=False, help="The point about which to compute the sensitivities"
+    )
+    y0: np.ndarray = TT.Array(
+        allow_none=False, help="The value of the outputs evaluates at x0"
+    )
 
-    xlabels: List[str] = T.List(allow_none=False)  # type: ignore [assignment]
-    ylabels: List[str] = T.List(allow_none=False)  # type: ignore [assignment]
+    xlabels: List[str] = T.List(allow_none=False, help="The name of each input")  # type: ignore [assignment]
+    ylabels: List[str] = T.List(allow_none=False, help="The name of each output")  # type: ignore [assignment]
 
-    data: Data = T.Instance(klass=Data)  # type: ignore [assignment]
-    grid: W.GridspecLayout = T.Instance(klass=W.GridspecLayout)
+    data: Data = T.Instance(klass=Data, help="object in charge of updating data")  # type: ignore [assignment]
+    grid: W.GridspecLayout = T.Instance(
+        klass=W.GridspecLayout, help="Grid containing all figures"
+    )
 
     _batches: List[List[int]] = T.List(allow_none=True)  # type: ignore [assignment]
 
@@ -263,8 +286,21 @@ class View(W.Box):
 
     # TODO: need to add white background to grid boxes, else pictures are transparent
 
-    def save_png(self, xlabel: str, ylabel: str) -> None:
-        """Save figure to PNG."""
+    def save_png(
+        self, xlabel: str, ylabel: str, filename: Optional[str] = None
+    ) -> None:
+        """Save figure as PNG.
+
+        Args:
+            xlabel: str
+                The label of the input shown in the figure.
+
+            ylabel: str
+                The label of the output shown in the figure.
+
+            filename: str, optional
+                File name to save to. Default is "profiler_{xlabel}_vs_{ylabel}.png"
+        """
         filename = f"profiler_{xlabel}_vs_{ylabel}.png"
         file = pl.Path(filename)
         j = self.xlabels.index(xlabel)

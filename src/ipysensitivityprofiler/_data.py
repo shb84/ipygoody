@@ -1,25 +1,27 @@
-"""Data.
-
-Module in charge of data structure from which sensitivity profiles are
-plotted.
-"""
-
 from typing import Any, Callable, List
 
 import numpy as np
 import traitlets as T
 import traittypes as TT
+from numpy.typing import NDArray
 
 
 class Data(T.HasTraits):
-    """Automatically evaluate outputs whenever inputs change."""
+    """Automatically evaluate outputs whenever inputs change.
+    
+    This class is in charge of managing source data and calling 
+    user prediction models as needed.
+    """
 
     xlabels: List[str] = T.List(allow_none=False)  # type: ignore [assignment]
     ylabels: List[str] = T.List(allow_none=False)  # type: ignore [assignment]
-    predict: Callable = T.Callable(allow_none=False)  # type: ignore [assignment]
+    predict: Callable = T.Callable(
+        allow_none=False, 
+        help="Callback that calls user provided models to update data as needed."
+    )  # type: ignore [assignment]
 
-    x: np.ndarray = TT.Array(allow_none=False)
-    y: np.ndarray = TT.Array()
+    x: NDArray = TT.Array(allow_none=False)
+    y: NDArray = TT.Array()
 
     def __init__(self, **kwargs: Any) -> None:
         super().__init__(self, **kwargs)
@@ -47,7 +49,7 @@ class Data(T.HasTraits):
         return self.y.shape[2]
 
     @T.validate("x")
-    def _validate_x(self, proposal: T.Bunch) -> np.ndarray:
+    def _validate_x(self, proposal: T.Bunch) -> NDArray:
         x = proposal.value
         if (
             x.ndim != 2  # noqa: PLR2004
@@ -60,7 +62,7 @@ class Data(T.HasTraits):
         return x
 
     @T.validate("y")
-    def _validate_y(self, proposal: T.Bunch) -> np.ndarray:
+    def _validate_y(self, proposal: T.Bunch) -> NDArray:
         y = proposal.value
         assert y.ndim == 3  # noqa: PLR2004 # require shape (m, n_y, N)
         assert y.shape[1] == self.n_y

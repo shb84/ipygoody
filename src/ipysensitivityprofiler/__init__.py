@@ -1,7 +1,7 @@
 """Module entry point."""
 
 from ._controller import Controller
-from ._model import profiler, Profiler
+from ._model import Profiler, profiler
 from ._view import View
 
 __version__ = "0.0.1"

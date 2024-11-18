@@ -146,6 +146,7 @@ traitlets = "*"
 widgetsnbextension = "*"
 numpy = "*"
 openmdao = "*"  # experimenting with openmdao model visualization
+matplotlib = "*"  # for static plots 
 
 [tool.pixi.feature.lint.dependencies]
 black = "*"

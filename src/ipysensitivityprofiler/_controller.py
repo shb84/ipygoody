@@ -1,8 +1,3 @@
-"""Controller.
-
-Module contains widgets, such as slider bars, to control model and view.
-"""
-
 from functools import partial
 from typing import Any, Dict, List
 
@@ -57,7 +52,7 @@ def _create_sliders(view: View) -> List[W.FloatSlider]:
     return sliders
 
 
-def _create_range_sliders(view: View) -> Dict[str, W.FloatRangeSlider]:
+def _create_range_sliders(view: View) -> Dict[str, List[W.FloatRangeSlider]]:
     sliders: Dict[str, List[W.FloatRangeSlider]] = {"x": [], "y": []}
 
     for i in range(view.data.n_y):
@@ -90,9 +85,29 @@ def _create_range_sliders(view: View) -> Dict[str, W.FloatRangeSlider]:
 
 
 class Controller(W.VBox):
-    """Control panel for profiler."""
+    """Control panel for profiler.
+
+    Attributes:
+        range_sliders: Dict[str, List[W.FloatRangeSlider]]:
+            Range sliders to control axis limits of inputs and outputs:
+
+        .. code-block:: python
+
+            range_sliders = {
+                "x": [...],  # list of range sliders associated with inputs
+                "y": [...],  # list of range sliders associated with outputs
+            }
+
+        sliders: List[W.FloatSlider]
+            Sliders to control input values (and automatically update view).
+    """
 
     def __init__(self, view: View, **kwargs: Any):
+        """Public constructor.
+
+        view: :py:class:`View`
+            Profiler widget to be controlled by controller.
+        """
         super().__init__(**kwargs)
 
         self.range_sliders = _create_range_sliders(view)

@@ -1,10 +1,9 @@
-"""Support functions used by modules."""
-
 from typing import List, Optional
 
 import bqplot as bq
 import ipywidgets as W
 import numpy as np
+from numpy.typing import NDArray
 
 DOT_COLOR = "#CD0000"
 LINE_COLOR = "#797a7a"
@@ -20,68 +19,72 @@ BETWEEN_SPACE = 5
 
 
 def create_grid(
-    x0: np.ndarray, xmin: np.ndarray, xmax: np.ndarray, resolution: int = 10
-) -> np.ndarray:
+    x0: NDArray, xmin: NDArray, xmax: NDArray, resolution: int = 10
+) -> NDArray:
     """Generate grid data for sensitivity profilers.
 
-    Parameters
-    ----------
-    x0: np.ndarray
-        Local point about which to plot sensivities.
-        Array of shape (n,) where n is the
-        number of input variables.
+    Args:
+        x0: NDArray
+            Local point about which to plot sensivities.
+            Array of shape (n,) where n is the
+            number of input variables.
 
-    xmin: np.ndarray
-        Min bound for plotting sensitivities.
-        Array of shape (n,)
+        xmin: NDArray
+            Min bound for plotting sensitivities.
+            Array of shape (n,)
 
-    xmax: np.ndarray
-        Max bound for plotting sensitivities.
-        Array of shape (n,)
+        xmax: NDArray
+            Max bound for plotting sensitivities.
+            Array of shape (n,)
 
-    resolution: int, optional
-        Number of points between xmin and xmax.
-        Default is 10.
+        resolution: int, optional
+            Number of points between xmin and xmax.
+            Default is 10.
 
-    Returns
-    -------
-    x: np.ndarray
-        Array of shape (resolution * n, n)
-        e.g.
-              x0 =  [ 0,  1,  2]
-            xmin =  [-5, -5, -5]
-            xmax =  [ 5,  5,  5]
+    Returns:
+        NDArray
+            Array of shape (resolution * n, n)
+            
+    Example:        
+        .. code-block:: python
 
-               x = [[-5,  1,  2],
-                    [-3,  1,  2],
-                    [-2,  1,  2],
-                    [-1,  1,  2],
-                    [ 0,  1,  2],
-                    [ 0,  1,  2],
-                    [ 1,  1,  2],
-                    [ 2,  1,  2],
-                    [ 3,  1,  2],
-                    [ 5,  1,  2],
-                    [ 0, -5,  2],
-                    [ 0, -3,  2],
-                    [ 0, -2,  2],
-                    [ 0, -1,  2],
-                    [ 0,  0,  2],
-                    [ 0,  0,  2],
-                    [ 0,  1,  2],
-                    [ 0,  2,  2],
-                    [ 0,  3,  2],
-                    [ 0,  5,  2],
-                    [ 0,  1, -5],
-                    [ 0,  1, -3],
-                    [ 0,  1, -2],
-                    [ 0,  1, -1],
-                    [ 0,  1,  0],
-                    [ 0,  1,  0],
-                    [ 0,  1,  1],
-                    [ 0,  1,  2],
-                    [ 0,  1,  3],
-                    [ 0,  1,  5]]
+                x = create_grid(
+                    x0=[ 0, 1, 2], 
+                    xmin=[-5, -5, -5], 
+                    xmax=[ 5, 5, 5],
+                    resolution=10,
+                )
+
+                >> x = [[-5,  1,  2], 
+                        [-3,  1,  2],
+                        [-2,  1,  2],
+                        [-1,  1,  2],
+                        [ 0,  1,  2],
+                        [ 0,  1,  2],
+                        [ 1,  1,  2],
+                        [ 2,  1,  2],
+                        [ 3,  1,  2],
+                        [ 5,  1,  2],
+                        [ 0, -5,  2],
+                        [ 0, -3,  2],
+                        [ 0, -2,  2],
+                        [ 0, -1,  2],
+                        [ 0,  0,  2],
+                        [ 0,  0,  2],
+                        [ 0,  1,  2],
+                        [ 0,  2,  2],
+                        [ 0,  3,  2],
+                        [ 0,  5,  2],
+                        [ 0,  1, -5],
+                        [ 0,  1, -3],
+                        [ 0,  1, -2],
+                        [ 0,  1, -1],
+                        [ 0,  1,  0],
+                        [ 0,  1,  0],
+                        [ 0,  1,  1],
+                        [ 0,  1,  2],
+                        [ 0,  1,  3],
+                        [ 0,  1,  5]]
     """
     ##########
     # Checks #
@@ -138,19 +141,17 @@ def create_batches(n: int, m: int) -> List[List[int]]:
     indices associated with the data for each curve
     in the curve.
 
-    Parameters
-    ----------
-    n: int, optional
-        Number of batches
+    Args:
+        n: int, optional
+            Number of batches
 
-    n: int, optional
-        Number of examples per batch
+        n: int, optional
+            Number of examples per batch
 
-    Returns
-    -------
-    batches: list
-        List of row indices corresponding to one
-        grid permutation.
+    Returns:
+        list
+            List of row indices corresponding to one
+            grid permutation.
     """
     batches = []
 
