@@ -44,18 +44,18 @@ def create_grid(
     Returns:
         NDArray
             Array of shape (resolution * n, n)
-            
-    Example:        
+
+    Example:
         .. code-block:: python
 
                 x = create_grid(
-                    x0=[ 0, 1, 2], 
-                    xmin=[-5, -5, -5], 
+                    x0=[ 0, 1, 2],
+                    xmin=[-5, -5, -5],
                     xmax=[ 5, 5, 5],
                     resolution=10,
                 )
 
-                >> x = [[-5,  1,  2], 
+                >> x = [[-5,  1,  2],
                         [-3,  1,  2],
                         [-2,  1,  2],
                         [-1,  1,  2],

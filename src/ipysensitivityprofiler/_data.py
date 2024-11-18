@@ -8,16 +8,16 @@ from numpy.typing import NDArray
 
 class Data(T.HasTraits):
     """Automatically evaluate outputs whenever inputs change.
-    
-    This class is in charge of managing source data and calling 
-    user prediction models as needed.
+
+    This class is in charge of managing source data and calling user
+    prediction models as needed.
     """
 
     xlabels: List[str] = T.List(allow_none=False)  # type: ignore [assignment]
     ylabels: List[str] = T.List(allow_none=False)  # type: ignore [assignment]
     predict: Callable = T.Callable(
-        allow_none=False, 
-        help="Callback that calls user provided models to update data as needed."
+        allow_none=False,
+        help="Callback that calls user provided models to update data as needed.",
     )  # type: ignore [assignment]
 
     x: NDArray = TT.Array(allow_none=False)
