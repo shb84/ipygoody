@@ -1,9 +1,5 @@
-"""View.
-
-Module contains widgets and data to render interactive sensivity
-profiles.
-"""
 import pathlib as pl
+from typing import Any, Callable, List, Optional
 
 import bqplot as bq
 import ipywidgets as W
@@ -20,7 +16,7 @@ DEFAULT_HEIGHT = DEFAULT_WIDTH
 
 
 class View(W.Box):
-    """Widget that displays grid of sensivity profiles."""
+    """Widget to display grid of sensivity profiles."""
 
     # _view_module = T.Unicode('sensivity_profiler').tag(sync=True)
     # _view_module_version = T.Unicode('0.0.0').tag(sync=True)
@@ -30,37 +26,64 @@ class View(W.Box):
     # Traits #
     ##########
 
-    predict = T.Callable(allow_none=False)
+    predict: Callable = T.Callable(
+        allow_none=False,
+        help="Callable function with signature y = f(x) where x must be a numpy array of shape (-1, n_x) and y an array of shape (-1, n_y)."
+        "",
+    )  # type: ignore [assignment]
 
-    xmin = TT.Array(allow_none=False)
-    xmax = TT.Array(allow_none=False)
+    xmin: np.ndarray = TT.Array(
+        allow_none=False,
+        help="An array of shape (n_x,) representing the lower bound on the inputs",
+    )
+    xmax: np.ndarray = TT.Array(
+        allow_none=False,
+        help="An array of shape (n_x,) representing the upper bound on the inputs",
+    )
 
-    ymin = TT.Array(allow_none=False)
-    ymax = TT.Array(allow_none=False)
+    ymin: np.ndarray = TT.Array(
+        allow_none=False,
+        help="An array of shape (n_y,) representing the lower bound on the outputs",
+    )
+    ymax: np.ndarray = TT.Array(
+        allow_none=False,
+        help="An array of shape (n_y,) representing the upper bound on the outputs",
+    )
 
-    width = T.Int(allow_none=True)
-    height = T.Int(allow_none=True)
+    width: int = T.Int(
+        allow_none=True, help="The width of each figure in pixels. Default is 300."
+    )  # type: ignore [assignment]
+    height: int = T.Int(
+        allow_none=True, help="The height of each figure in pixels. Default is 300."
+    )  # type: ignore [assignment]
 
-    resolution = T.Int(default_value=DEFAULT_RESOLUTION)
+    resolution: int = T.Int(
+        default_value=DEFAULT_RESOLUTION,
+        help="The number of point in each curve. Default is 25.",
+    )  # type: ignore [assignment]
 
-    x0 = TT.Array(allow_none=False)
-    y0 = TT.Array(allow_none=False)
+    x0: np.ndarray = TT.Array(
+        allow_none=False, help="The point about which to compute the sensitivities"
+    )
+    y0: np.ndarray = TT.Array(
+        allow_none=False, help="The value of the outputs evaluates at x0"
+    )
 
-    xlabels = T.List(allow_none=False)
-    ylabels = T.List(allow_none=False)
+    xlabels: List[str] = T.List(allow_none=False, help="The name of each input")  # type: ignore [assignment]
+    ylabels: List[str] = T.List(allow_none=False, help="The name of each output")  # type: ignore [assignment]
 
-    data = T.Instance(klass=Data)
-    grid = T.Instance(klass=W.GridspecLayout)
+    data: Data = T.Instance(klass=Data, help="object in charge of updating data")  # type: ignore [assignment]
+    grid: W.GridspecLayout = T.Instance(
+        klass=W.GridspecLayout, help="Grid containing all figures"
+    )
 
-    _batches = T.List(allow_none=True)
-    _lines = T.List(allow_none=True)
-    _dots = T.List(allow_none=True)
+    _batches: List[List[int]] = T.List(allow_none=True)  # type: ignore [assignment]
 
     #################
     # Instantiation #
     #################
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any):
         super().__init__(**kwargs)
 
         #########
@@ -94,12 +117,12 @@ class View(W.Box):
     # Interactive #
     ###############
 
-    def _update_data(self, *args, **kwargs):
+    def _update_data(self, *_: Any) -> None:
         self.data.x = create_grid(
             x0=self.x0, xmin=self.xmin, xmax=self.xmax, resolution=self.resolution
         )
 
-    def _update_figs(self, *args, **kwargs):
+    def _update_figs(self, *_: Any) -> None:
         with self.grid.hold_sync():
             for j in range(self.data.n_x):
                 batch = self._batches[
@@ -120,7 +143,7 @@ class View(W.Box):
                             dot.y = self.y0[0, i : i + 1, k]
                             k += 1
 
-    def _update_lims(self, *args, **kwargs):
+    def _update_lims(self, *_: Any) -> None:
         with self.grid.hold_sync():
             for j in range(self.data.n_x):
                 for i in range(self.data.n_y):
@@ -129,7 +152,7 @@ class View(W.Box):
                     self.grid[i, j].axes[1].scale.min = self.ymin[i]
                     self.grid[i, j].axes[1].scale.max = self.ymax[i]
 
-    def _update_labels(self):
+    def _update_labels(self) -> None:
         with self.grid.hold_sync():
             for j in range(self.data.n_x):
                 for i in range(self.data.n_y):
@@ -141,7 +164,7 @@ class View(W.Box):
     ############
 
     @T.default("x0")
-    def _create_x0(self):
+    def _create_x0(self) -> np.ndarray:
         x0 = 0.5 * (self.xmin + self.xmax).reshape((1, -1))
         return x0
 
@@ -151,17 +174,17 @@ class View(W.Box):
     #     return y0
 
     @T.default("xlabels")
-    def _create_xlabels(self):
+    def _create_xlabels(self) -> List[str]:
         n_x = self.xmin.size
         return [f"x{i}" for i in range(n_x)]
 
     @T.default("ylabels")
-    def _create_ylabels(self):
+    def _create_ylabels(self) -> List[str]:
         n_y = self.ymin.size
         return [f"y{i}" for i in range(n_y)]
 
     @T.default("data")
-    def _create_data(self):
+    def _create_data(self) -> Data:
         data = Data(
             predict=self.predict,
             xlabels=self.xlabels,
@@ -173,14 +196,18 @@ class View(W.Box):
         return data
 
     @T.default("grid")
-    def _create_view(self):
+    def _create_view(self) -> np.ndarray:
         grid = make_grid(
-            self.data.n_x, self.data.n_y, self.data.N, self.width, self.height,
+            self.data.n_x,
+            self.data.n_y,
+            self.data.N,
+            self.width,
+            self.height,
         )
         return grid
 
     @T.default("_batches")
-    def _create_batches(self):
+    def _create_batches(self) -> List[List[int]]:
         batches = create_batches(self.data.n_x, self.resolution)
         return batches
 
@@ -189,21 +216,21 @@ class View(W.Box):
     ############
 
     @T.validate("width")
-    def _validate_width(self, proposal):
+    def _validate_width(self, proposal: T.Bunch) -> int:
         width = proposal.value
         if width is None:
             return DEFAULT_WIDTH * self.data.n_y
         return width
 
     @T.validate("height")
-    def _validate_height(self, proposal):
+    def _validate_height(self, proposal: T.Bunch) -> int:
         height = proposal.value
         if height is None:
             return DEFAULT_HEIGHT * self.data.n_y
         return height
 
     @T.validate("xlabels")
-    def _validate_xlabels(self, proposal):
+    def _validate_xlabels(self, proposal: T.Bunch) -> List[str]:
         xlabels = proposal.value
         if not xlabels:
             return self._create_xlabels()
@@ -211,7 +238,7 @@ class View(W.Box):
         return xlabels
 
     @T.validate("ylabels")
-    def _validate_ylabels(self, proposal):
+    def _validate_ylabels(self, proposal: T.Bunch) -> List[str]:
         ylabels = proposal.value
         if not ylabels:
             return self._create_ylabels()
@@ -219,13 +246,13 @@ class View(W.Box):
         return ylabels
 
     @T.validate("y0")
-    def _validate_y0(self, proposal):
+    def _validate_y0(self, proposal: T.Bunch) -> np.ndarray:
         array = proposal.value
         assert array.ndim == self.data.y.ndim
         return array.astype(np.float64)
 
     @T.validate("x0")
-    def _validate_x0(self, proposal):
+    def _validate_x0(self, proposal: T.Bunch) -> np.ndarray:
         array = proposal.value
         if array is None:
             return self._create_x0()
@@ -234,22 +261,22 @@ class View(W.Box):
         return array.astype(np.float64)
 
     @T.validate("xmin")
-    def _validate_xmin(self, proposal):
+    def _validate_xmin(self, proposal: T.Bunch) -> np.ndarray:
         array = proposal.value
         return array.astype(np.float64).ravel()
 
     @T.validate("xmax")
-    def _validate_xmax(self, proposal):
+    def _validate_xmax(self, proposal: T.Bunch) -> np.ndarray:
         array = proposal.value
         return array.astype(np.float64).ravel()
 
     @T.validate("ymin")
-    def _validate_ymin(self, proposal):
+    def _validate_ymin(self, proposal: T.Bunch) -> np.ndarray:
         array = proposal.value
         return array.astype(np.float64).ravel()
 
     @T.validate("ymax")
-    def _validate_ymax(self, proposal):
+    def _validate_ymax(self, proposal: T.Bunch) -> np.ndarray:
         array = proposal.value
         return array.astype(np.float64).ravel()
 
@@ -259,15 +286,28 @@ class View(W.Box):
 
     # TODO: need to add white background to grid boxes, else pictures are transparent
 
-    def save_png(self, xlabel: str, ylabel: str):
-        """Save figure to PNG."""
+    def save_png(
+        self, xlabel: str, ylabel: str, filename: Optional[str] = None
+    ) -> None:
+        """Save figure as PNG.
+
+        Args:
+            xlabel: str
+                The label of the input shown in the figure.
+
+            ylabel: str
+                The label of the output shown in the figure.
+
+            filename: str, optional
+                File name to save to. Default is "profiler_{xlabel}_vs_{ylabel}.png"
+        """
         filename = f"profiler_{xlabel}_vs_{ylabel}.png"
         file = pl.Path(filename)
         j = self.xlabels.index(xlabel)
         i = self.ylabels.index(ylabel)
         figure = self.grid[i, j]
 
-        def save_when_ready(data) -> None:
+        def save_when_ready(data: bytes) -> None:
             file.write_bytes(data)
 
         figure.get_png_data(save_when_ready)

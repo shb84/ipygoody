@@ -25,7 +25,10 @@ copyright = '2024, Steven H. Berguin'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.autodoc']
+extensions = [
+    'sphinx.ext.autodoc', 
+    'sphinx_toolbox.collapse',
+]
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -37,4 +40,13 @@ exclude_patterns = []
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+
+autodoc_default_options = {
+    'members': True,
+    'member-order': 'bysource',
+    'special-members': '__init__',
+    'undoc-members': True,
+    'exclude-members': '__weakref__',
+    'show-inheritance': True
+}
 

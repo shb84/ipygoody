@@ -1,8 +1,9 @@
-"""Support functions used by modules."""
+from typing import List, Optional
 
 import bqplot as bq
 import ipywidgets as W
 import numpy as np
+from numpy.typing import NDArray
 
 DOT_COLOR = "#CD0000"
 LINE_COLOR = "#797a7a"
@@ -17,67 +18,73 @@ FIG_MARGIN = dict(top=45, bottom=45, left=45, right=45)
 BETWEEN_SPACE = 5
 
 
-def create_grid(x0, xmin, xmax, resolution=10):
+def create_grid(
+    x0: NDArray, xmin: NDArray, xmax: NDArray, resolution: int = 10
+) -> NDArray:
     """Generate grid data for sensitivity profilers.
 
-    Parameters
-    ----------
-    x0: np.ndarray
-        Local point about which to plot sensivities.
-        Array of shape (n,) where n is the
-        number of input variables.
+    Args:
+        x0: NDArray
+            Local point about which to plot sensivities.
+            Array of shape (n,) where n is the
+            number of input variables.
 
-    xmin: np.ndarray
-        Min bound for plotting sensitivities.
-        Array of shape (n,)
+        xmin: NDArray
+            Min bound for plotting sensitivities.
+            Array of shape (n,)
 
-    xmax: np.ndarray
-        Max bound for plotting sensitivities.
-        Array of shape (n,)
+        xmax: NDArray
+            Max bound for plotting sensitivities.
+            Array of shape (n,)
 
-    resolution: int, optional
-        Number of points between xmin and xmax.
-        Default is 10.
+        resolution: int, optional
+            Number of points between xmin and xmax.
+            Default is 10.
 
-    Returns
-    -------
-    x: np.ndarray
-        Array of shape (resolution * n, n)
-        e.g.
-              x0 =  [ 0,  1,  2]
-            xmin =  [-5, -5, -5]
-            xmax =  [ 5,  5,  5]
+    Returns:
+        NDArray
+            Array of shape (resolution * n, n)
 
-               x = [[-5,  1,  2],
-                    [-3,  1,  2],
-                    [-2,  1,  2],
-                    [-1,  1,  2],
-                    [ 0,  1,  2],
-                    [ 0,  1,  2],
-                    [ 1,  1,  2],
-                    [ 2,  1,  2],
-                    [ 3,  1,  2],
-                    [ 5,  1,  2],
-                    [ 0, -5,  2],
-                    [ 0, -3,  2],
-                    [ 0, -2,  2],
-                    [ 0, -1,  2],
-                    [ 0,  0,  2],
-                    [ 0,  0,  2],
-                    [ 0,  1,  2],
-                    [ 0,  2,  2],
-                    [ 0,  3,  2],
-                    [ 0,  5,  2],
-                    [ 0,  1, -5],
-                    [ 0,  1, -3],
-                    [ 0,  1, -2],
-                    [ 0,  1, -1],
-                    [ 0,  1,  0],
-                    [ 0,  1,  0],
-                    [ 0,  1,  1],
-                    [ 0,  1,  2],
-                    [ 0,  1,  3],
-                    [ 0,  1,  5]]
+    Example:
+        .. code-block:: python
+
+                x = create_grid(
+                    x0=[ 0, 1, 2],
+                    xmin=[-5, -5, -5],
+                    xmax=[ 5, 5, 5],
+                    resolution=10,
+                )
+
+                >> x = [[-5,  1,  2],
+                        [-3,  1,  2],
+                        [-2,  1,  2],
+                        [-1,  1,  2],
+                        [ 0,  1,  2],
+                        [ 0,  1,  2],
+                        [ 1,  1,  2],
+                        [ 2,  1,  2],
+                        [ 3,  1,  2],
+                        [ 5,  1,  2],
+                        [ 0, -5,  2],
+                        [ 0, -3,  2],
+                        [ 0, -2,  2],
+                        [ 0, -1,  2],
+                        [ 0,  0,  2],
+                        [ 0,  0,  2],
+                        [ 0,  1,  2],
+                        [ 0,  2,  2],
+                        [ 0,  3,  2],
+                        [ 0,  5,  2],
+                        [ 0,  1, -5],
+                        [ 0,  1, -3],
+                        [ 0,  1, -2],
+                        [ 0,  1, -1],
+                        [ 0,  1,  0],
+                        [ 0,  1,  0],
+                        [ 0,  1,  1],
+                        [ 0,  1,  2],
+                        [ 0,  1,  3],
+                        [ 0,  1,  5]]
     """
     ##########
     # Checks #
@@ -111,7 +118,7 @@ def create_grid(x0, xmin, xmax, resolution=10):
     return x
 
 
-def create_batches(n: int, m: int):
+def create_batches(n: int, m: int) -> List[List[int]]:
     """Create n batches containing m examples each.
 
     Given an array x of shape (n * m, -1), this method
@@ -134,19 +141,17 @@ def create_batches(n: int, m: int):
     indices associated with the data for each curve
     in the curve.
 
-    Parameters
-    ----------
-    n: int, optional
-        Number of batches
+    Args:
+        n: int, optional
+            Number of batches
 
-    n: int, optional
-        Number of examples per batch
+        n: int, optional
+            Number of examples per batch
 
-    Returns
-    -------
-    batches: list
-        List of row indices corresponding to one
-        grid permutation.
+    Returns:
+        list
+            List of row indices corresponding to one
+            grid permutation.
     """
     batches = []
 
@@ -164,12 +169,12 @@ def make_figure(
     num_x_ticks: int = 3,
     num_y_ticks: int = 3,
     tick_style: dict = {"font-size": 10},
-    xmin: float = None,
-    xmax: float = None,
-    ymin: float = None,
-    ymax: float = None,
-):
-    """Create initial figure for profiler trait (data will be replaced)"""
+    xmin: Optional[float] = None,
+    xmax: Optional[float] = None,
+    ymin: Optional[float] = None,
+    ymax: Optional[float] = None,
+) -> bq.Figure:
+    """Create initial figure for profiler trait (data will be replaced)."""
     x = np.array([0, 1])
     y = np.array([0, 1])
     x0 = np.array([0.5])
@@ -222,20 +227,25 @@ def make_figure(
         flex_flow="column",
         border="solid 2px",
         align_items="stretch",
-        width='auto', height='auto',
+        width="auto",
+        height="auto",
     )
     fig = bq.Figure(marks=marks, axes=[xax, yax], layout=layout, fig_margin=FIG_MARGIN)
     return fig
 
 
-def make_grid(n_x: int, n_y: int, N: int, width: int = None, height: int = None):
+def make_grid(
+    n_x: int,
+    n_y: int,
+    N: int,
+    width: Optional[int] = None,
+    height: Optional[int] = None,
+) -> W.GridspecLayout:
     """Create grid layout of specified width and height."""
     if width:
         fig_width = f"{width / n_x - BETWEEN_SPACE}px"
-        width = f"{width}px"
     if height:
         fig_height = f"{height / n_y - BETWEEN_SPACE}px"
-        height = f"{height}px"
     grid = W.GridspecLayout(n_y, n_x)
     for j in range(n_x):
         for i in range(n_y):

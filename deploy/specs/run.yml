@@ -1,5 +1,0 @@
-dependencies:
-  # runtime
-  - numpy
-  - pydoe2
-  - openmdao

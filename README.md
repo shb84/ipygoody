@@ -1,81 +1,61 @@
 # ipysensitivityprofiler
 
-Jupyter Widgets for visualizing local sensitivities of one or more vectorized functions with signature `y = f(x)`  where `x,y` are arrays.
+Jupyter Widgets for visualizing local sensitivities of vectorized functions with signature `y = f(x)` where `x,y` are arrays.
 
 --- 
 ## Installation
 
-#### `dev`
-Assuming [conda](https://conda.org/) is installed:
-
-```bash
-conda env update --file environment.yml --prefix ./venv
-conda activate ./venv
-pip install -e . 
-pytest
+```
+pip install ipysensitivityprofiler
 ```
 
-#### `ci`
+--- 
+## Example 
 
-Commands are run with [`doit`](https://pydoit.org/). To see all `doit` commands:
-
-```bash
-doit list --all --status
-```
-
-To install the `ci` environment: 
-
-```bash
-doit env install test
-```
-
----
-## Contribution
-
-The recommended process is to do all work in the `dev` environment. 
-Upon satisfaction, before merge requests, follow the steps below.  
-
-#### Step 1: Update Environment Specs (optional)
-
-_**IF AND ONLY IF** the `environment.yml` file was updated during during development, then the `ci` environment must also be updated accordingly. To do so, update `deploy/specs/run.yml` and re-generate the lock files_: 
- 
-```bash
-doit lock
-```
-
-#### Step 2: Run Unit Tests
-
-_Make sure the unit tests are passing_: 
-
-```bash
-doit install test
-```
-
-#### Step 3: Fix Lint Issues 
-
-_Make sure the code is well formatted. Fix manually if needed_: 
-
-```bash
-doit fix lint
-```
-
-#### Step 4: Run Notebooks (optional) 
-
-_If applicable, mannually check notebooks in `ci` environment_: 
-
-```bash
-doit lab
-```
+Example notebooks are avilable for download on [GitHub]() and hosted on [binder.org](). 
 
 --- 
 ## Documentation 
 
-Documentation is available [here](TODO) (generated using `sphinx`)
+Documentation is available [here](TODO) (generated using [`sphinx`](https://www.sphinx-doc.org/en/master/))
 
 --- 
 ## Usage
-TODO
+
+```
+import numpy as np
+import ipysensitivityprofiler as isp
+
+def quadratic1(x):
+    """y = x1**2 + x2**2 + x1*x2"""
+    return (np.prod(x, axis=1) + np.power(x, 2).sum(axis=1))
+
+def quadratic2(x):
+    """y = 10 + x1**2 + x2**2 - 2 * x1*x2"""
+    return (10 - 2 * np.prod(x, axis=1) + np.power(x, 2).sum(axis=1))
+
+isp.profiler(
+    models=[quadratic1, quadratic2], 
+    xmin=[0, 0],
+    xmax=[2, 1],
+    ymin=[0],
+    ymax=[20],
+    x0=[1.5, 0.75],
+    resolution=10_000, 
+    xlabels=["x1", "x2"],
+    ylabels=["y"],
+)
+```
+
+![](docs/pics/basic_usage.gif)
+
+---
+# Main Features
+
+* Visualize multiple outputs against multiple inputs interactively 
+* Overlay more than one model at once
+* Download pictures on individual plots (by clicking on red dot)
 
 --- 
 ## License
-Distributed under the terms of the Modified BSD License.
+Distributed under the terms of the MIT License.
