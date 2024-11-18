@@ -197,6 +197,5 @@ build-docs = { cmd = "sphinx-build -b html docs/source build/docs/html", inputs 
 build = { depends-on = ["build-docs", "build-dist"] }
 
 [tool.pixi.feature.release.tasks]
-release-test = { cmd = "python -m twine upload build/dist/* --verbose --skip-existing --repository testpypi", inputs = ["src/**/*.py"] }
-# actual release is done via GitHub actions
-release = { depends-on = ["release-test"] }
+release-testpypi = { cmd = "python -m twine upload build/dist/* --verbose --skip-existing --repository testpypi", inputs = ["src/**/*.py"] }
+release-pypi = { cmd = "python -m twine upload build/dist/* --verbose --skip-existing", inputs = ["src/**/*.py"] }

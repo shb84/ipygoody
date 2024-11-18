@@ -8098,7 +8098,7 @@ packages:
   name: ipysensitivityprofiler
   version: 0.0.1
   path: .
-  sha256: 8971949a097963650c0e98b0bc4aac095c1f16439bf6a0051f60aff568a34c3e
+  sha256: 36388753b6062b0347d898316cbec3ef44f979cc37959ea815e8fd1d1de5330e
   requires_dist:
   - numpy
   - bqplot

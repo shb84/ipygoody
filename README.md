@@ -1,6 +1,9 @@
 # ipysensitivityprofiler
 
+<!-- [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main?labpath=notebooks) -->
+
 Jupyter Widgets for visualizing local sensitivities of vectorized functions with signature `y = f(x)` where `x,y` are arrays.
+
 
 --- 
 ## Installation
@@ -10,14 +13,14 @@ pip install ipysensitivityprofiler
 ```
 
 --- 
-## Example 
+## Example  
 
-Example notebooks are avilable for download on [GitHub]() and hosted on [binder.org](). 
+Example notebooks are available for download on [GitHub](https://github.com/shb84/ipysensitivityprofiler/tree/main/notebooks) and hosted on [binder](https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main?labpath=notebooks). 
 
 --- 
 ## Documentation 
 
-Documentation is available [here](TODO) (generated using [`sphinx`](https://www.sphinx-doc.org/en/master/))
+Documentation is available [here](https://shb84.github.io/ipysensitivityprofiler/) (generated using [`sphinx`](https://www.sphinx-doc.org/en/master/))
 
 --- 
 ## Usage
