@@ -78,8 +78,8 @@ changing) and the response surface of interest.
 Example Usage
 -------------
 
-.. .. image:: https://mybinder.org/badge_logo.svg
-..  :target: https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main?labpath=notebooks
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main
 
 .. collapse:: show code
 
