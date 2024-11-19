@@ -3,4 +3,5 @@ channels:
 dependencies:
   - pip
   - pip:
-      - ipysensitivityprofiler
+    - openmdao
+    - ipysensitivityprofiler
