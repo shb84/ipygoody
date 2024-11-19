@@ -189,4 +189,4 @@ dependencies:
   - zstandard=0.23.0=py312h15fbf35_1
   - zstd=1.5.6=hb46c0d2_0
   - pip:
-      - ipysensitivityprofiler==0.0.1
+      - ipysensitivityprofiler==0.0.1 --no-deps
