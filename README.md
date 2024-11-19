@@ -1,6 +1,6 @@
 # ipysensitivityprofiler
 
-<!-- [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/dev) -->
+<!-- [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main) -->
 
 Jupyter Widgets for visualizing local sensitivities of vectorized functions with signature `y = f(x)` where `x,y` are arrays.
 

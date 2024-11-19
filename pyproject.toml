@@ -164,7 +164,7 @@ pytest-html = "*"
 
 [tool.pixi.feature.openmdao.tasks]
 lab = "jupyter lab --no-browser"
-env = { cmd = "conda env export -p .pixi/envs/default > environment.yml", inputs = ["pixi.lock", "src/**/*.py"], outputs = ["environment.yml"]}
+env = { cmd = "conda env export -p .pixi/envs/default --no-builds | grep -v '^prefix: ' | grep -v '^name: ' > environment.yml", inputs = ["pixi.lock", "src/**/*.py"], outputs = ["environment.yml"]}
 
 [tool.pixi.feature.lint.tasks]
 black = { cmd = "black --quiet src/", inputs = ["src/**/*.py"] }
