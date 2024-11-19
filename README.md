@@ -1,5 +1,5 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main)
-[![PyPI version](https://badge.fury.io/py/ipysensitivityprofiler.svg)](https://badge.fury.io/py/ipysensitivityprofiler)
+[![PyPI version](https://badge.fury.io/py/ipysensitivityprofiler.svg)](https://pypi.org/project/ipysensitivityprofiler/)
 
 # ipysensitivityprofiler
 
