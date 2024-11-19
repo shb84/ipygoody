@@ -1,4 +1,4 @@
-name: /Users/sberguin3/Developer/ipysensitivityprofiler/.pixi/envs/default
+name: ipysensitivityprofiler
 channels:
   - conda-forge
 dependencies:
@@ -160,4 +160,3 @@ dependencies:
       - ipysensitivityprofiler==0.0.1
       - networkx==3.4.2
       - openmdao==3.35.0
-prefix: /Users/sberguin3/Developer/ipysensitivityprofiler/.pixi/envs/default
