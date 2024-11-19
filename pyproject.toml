@@ -52,6 +52,7 @@ release = [
 ]
 
 [project.urls]
+Documentation = "https://shb84.github.io/ipysensitivityprofiler/"
 Homepage = "https://github.com/shb84/ipysensitivityprofiler.git"
 Issues = "https://github.com/shb84/ipysensitivityprofiler/issues"
 

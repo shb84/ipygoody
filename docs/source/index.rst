@@ -3,6 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. image:: https://mybinder.org/badge_logo.svg
+ :target: https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main
+
+ .. image:: https://badge.fury.io/py/ipysensitivityprofiler.svg
+    :target: https://badge.fury.io/py/ipysensitivityprofiler
+    
 Welcome to ipysensitivityprofiler's documentation!
 ==================================================
 
@@ -77,9 +83,6 @@ changing) and the response surface of interest.
 
 Example Usage
 -------------
-
-.. image:: https://mybinder.org/badge_logo.svg
- :target: https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main
 
 .. collapse:: show code
 
