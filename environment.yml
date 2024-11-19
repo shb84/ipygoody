@@ -3,4 +3,4 @@ channels:
 dependencies:
   - pip
   - pip:
-      - ipysensitivityprofiler=0.0.1
+      - ipysensitivityprofiler
