@@ -16,7 +16,7 @@ pip install ipysensitivityprofiler
 --- 
 ## Example  
 
-Example notebooks are available for download on [GitHub](https://github.com/shb84/ipysensitivityprofiler/tree/main/notebooks) or hosted on [biinder](https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main).
+Example notebooks are available for download on [GitHub](https://github.com/shb84/ipysensitivityprofiler/tree/main/notebooks) or hosted on [binder](https://mybinder.org/v2/gh/shb84/ipysensitivityprofiler.git/main).
 
 --- 
 ## Documentation 
